@@ -5,3 +5,9 @@
 ```javascript
 npm install -g .
 ```
+
+### Удалить утилиту из глобального запуска
+
+```javascript
+npm uninstall -g current
+```
