@@ -18,14 +18,14 @@ const OPTIONS = {
   },
 };
 
-yargs
+const date = new Date();
+const options = yargs(hideBin(process.argv))
   .options(OPTIONS)
   .command(
     "add [year]|[month]|[day]",
     "Получение даты в будущем",
     OPTIONS,
     (options) => {
-      const date = new Date();
       let newDate = "";
       if (options.year || options.y) {
         newDate = date.setFullYear(date.getFullYear() + options.y);
@@ -50,7 +50,6 @@ yargs
     "Получение даты в прошлом",
     OPTIONS,
     (options) => {
-      const date = new Date();
       let newDate = "";
       if (options.year || options.y) {
         newDate = date.setFullYear(date.getFullYear() - options.y);
@@ -71,9 +70,6 @@ yargs
     }
   )
   .help().argv;
-
-const date = new Date();
-const options = yargs(hideBin(process.argv)).argv;
 
 if (options.year || options.y) {
   console.log(`Текущий год: ${date.getFullYear()}`);
