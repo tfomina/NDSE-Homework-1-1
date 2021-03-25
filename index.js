@@ -22,10 +22,11 @@ const date = new Date();
 
 if (options.year || options.y) {
   console.log(date.getFullYear());
-} else if (options.month || options.m) {
-  console.log(date.getMonth() + 1);
-} else if (options.date || options.d) {
-  console.log(date.getDate());
-} else {
-  console.log(date);
 }
+if (options.month || options.m) {
+  console.log(date.getMonth() + 1);
+}
+if (options.date || options.d) {
+  console.log(date.getDate());
+}
+console.log(date);
