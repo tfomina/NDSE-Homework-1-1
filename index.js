@@ -3,30 +3,77 @@
 const yargs = require("yargs");
 const { hideBin } = require("yargs/helpers");
 
-const options = yargs(hideBin(process.argv))
-  .options({
-    year: {
-      alias: "y",
-      describe: "Текущий год",
-    },
-    month: {
-      alias: "m",
-      describe: "Текущий месяц",
-    },
-    date: {
-      alias: "d",
-      describe: "Дата в календарном месяце",
-    },
-    add: {
-      describe: "Получение даты в будущем",
-    },
-    sub: {
-      describe: "Получение даты в прошлом",
-    },
-  })
+const OPTIONS = {
+  year: {
+    alias: "y",
+    describe: "Текущий год",
+  },
+  month: {
+    alias: "m",
+    describe: "Текущий месяц",
+  },
+  date: {
+    alias: "d",
+    describe: "Дата в календарном месяце",
+  },
+};
+
+yargs
+  .options(OPTIONS)
+  .command(
+    "add [year]|[month]|[day]",
+    "Получение даты в будущем",
+    OPTIONS,
+    (options) => {
+      const date = new Date();
+      let newDate = "";
+      if (options.year || options.y) {
+        newDate = date.setFullYear(date.getFullYear() + options.y);
+      }
+
+      if (options.month || options.m) {
+        newDate = date.setMonth(date.getMonth() + options.m);
+      }
+
+      if (options.date || options.d) {
+        newDate = date.setDate(date.getDate() + options.d);
+      }
+
+      if (!newDate) process.exit(-1);
+
+      console.log(`Дата в будущем: ${new Date(newDate).toISOString()}`);
+      process.exit(-1);
+    }
+  )
+  .command(
+    "sub [year]|[month]|[day]",
+    "Получение даты в прошлом",
+    OPTIONS,
+    (options) => {
+      const date = new Date();
+      let newDate = "";
+      if (options.year || options.y) {
+        newDate = date.setFullYear(date.getFullYear() - options.y);
+      }
+
+      if (options.month || options.m) {
+        newDate = date.setMonth(date.getMonth() - options.m);
+      }
+
+      if (options.date || options.d) {
+        newDate = date.setDate(date.getDate() - options.d);
+      }
+
+      if (!newDate) process.exit(-1);
+
+      console.log(`Дата в прошлом: ${new Date(newDate).toISOString()}`);
+      process.exit(-1);
+    }
+  )
   .help().argv;
 
 const date = new Date();
+const options = yargs(hideBin(process.argv)).argv;
 
 if (options.year || options.y) {
   console.log(`Текущий год: ${date.getFullYear()}`);
@@ -35,63 +82,7 @@ if (options.month || options.m) {
   console.log(`Текущий месяц: ${date.getMonth() + 1}`);
 }
 if (options.date || options.d) {
-  console.log(`Дата в календарном месяце ${date.getDate()}`);
-}
-
-// Получение даты в будущем
-if (options.add) {
-  if (options.year || options.y) {
-    console.log(
-      `Год в будущем: ${new Date(
-        date.setFullYear(date.getFullYear() + options.y)
-      ).getFullYear()}`
-    );
-  }
-
-  if (options.month || options.m) {
-    console.log(
-      `Месяц в будущем: ${
-        new Date(date.setMonth(date.getMonth() + options.m)).getMonth() + 1
-      }`
-    );
-  }
-
-  if (options.date || options.d) {
-    console.log(
-      `День в будущем: ${new Date(
-        date.setDate(date.getDate() + options.d)
-      ).getDate()}`
-    );
-  }
-}
-
-// Получение даты в прошлом
-if (options.sub) {
-  if (options.year || options.y) {
-    console.log(
-      `Год в прошлом: ${new Date(
-        date.setFullYear(date.getFullYear() - options.y)
-      ).getFullYear()}`
-    );
-  }
-
-  if (options.month || options.m) {
-    console.log(
-      `Месяц в прошлом: ${
-        new Date(date.setMonth(date.getMonth() - options.m)).getMonth() + 1
-      }`
-    );
-  }
-
-  if (options.date || options.d) {
-    if (options.date || options.d) {
-      console.log(
-        `День в прошлом: ${new Date(
-          date.setDate(date.getDate() - options.d)
-        ).getDate()}`
-      );
-    }
-  }
+  console.log(`Дата в календарном месяце: ${date.getDate()}`);
 }
 
 // Если не передано никаких аргументов, возвращаем текущую дату
