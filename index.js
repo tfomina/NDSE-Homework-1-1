@@ -29,31 +29,39 @@ const options = yargs(hideBin(process.argv))
 const date = new Date();
 
 if (options.year || options.y) {
-  console.log(date.getFullYear());
+  console.log(`Текущий год: ${date.getFullYear()}`);
 }
 if (options.month || options.m) {
-  console.log(date.getMonth() + 1);
+  console.log(`Текущий месяц: ${date.getMonth() + 1}`);
 }
 if (options.date || options.d) {
-  console.log(date.getDate());
+  console.log(`Дата в календарном месяце ${date.getDate()}`);
 }
 
 // Получение даты в будущем
 if (options.add) {
   if (options.year || options.y) {
     console.log(
-      new Date(date.setFullYear(date.getFullYear() + options.y)).getFullYear()
+      `Год в будущем: ${new Date(
+        date.setFullYear(date.getFullYear() + options.y)
+      ).getFullYear()}`
     );
   }
 
   if (options.month || options.m) {
     console.log(
-      new Date(date.setMonth(date.getMonth() + options.m)).getMonth() + 1
+      `Месяц в будущем: ${
+        new Date(date.setMonth(date.getMonth() + options.m)).getMonth() + 1
+      }`
     );
   }
 
   if (options.date || options.d) {
-    console.log(new Date(date.setDate(date.getDate() + options.d)).getDate());
+    console.log(
+      `День в будущем: ${new Date(
+        date.setDate(date.getDate() + options.d)
+      ).getDate()}`
+    );
   }
 }
 
@@ -61,20 +69,32 @@ if (options.add) {
 if (options.sub) {
   if (options.year || options.y) {
     console.log(
-      new Date(date.setFullYear(date.getFullYear() - options.y)).getFullYear()
+      `Год в прошлом: ${new Date(
+        date.setFullYear(date.getFullYear() - options.y)
+      ).getFullYear()}`
     );
   }
 
   if (options.month || options.m) {
     console.log(
-      new Date(date.setMonth(date.getMonth() - options.m)).getMonth() + 1
+      `Месяц в прошлом: ${
+        new Date(date.setMonth(date.getMonth() - options.m)).getMonth() + 1
+      }`
     );
   }
 
   if (options.date || options.d) {
     if (options.date || options.d) {
-      console.log(new Date(date.setDate(date.getDate() - options.d)).getDate());
+      console.log(
+        `День в прошлом: ${new Date(
+          date.setDate(date.getDate() - options.d)
+        ).getDate()}`
+      );
     }
   }
 }
-console.log(date);
+
+// Если не передано никаких аргументов, возвращаем текущую дату
+if (Object.keys(options).length === 2) {
+  console.log(date);
+}
