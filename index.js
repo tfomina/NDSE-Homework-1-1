@@ -69,6 +69,7 @@ const options = yargs(hideBin(process.argv))
       process.exit(-1);
     }
   )
+  .strict()
   .help().argv;
 
 if (options.year || options.y) {
